@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+const img = (filename) => `${import.meta.env.BASE_URL}images/${filename}`;
+
 const services = [
   {
     id: "01",
@@ -28,7 +30,7 @@ const experience = [
     label: "2024 — Present",
     title: "Radar Engineer",
     organization: "EWR Radar Systems",
-    image: "/images/amp-interface.jpg",
+    image: img("amp-interface.jpg"),
     bullets: [
       "Designed and tested an amplifier interface PCB for radar transmit / standby control with gigabit Ethernet, 4-channel ADC monitoring, and controlled-impedance layout.",
       "Designed and tested C-band and X-band active downconverter modules with IQ mixer architecture, limiter/LNA front ends, and custom GaAs bias sequencing.",
@@ -40,7 +42,7 @@ const experience = [
     label: "2026 — Present",
     title: "Student Research Assistant",
     organization: "Microwave Research Group",
-    image: "/images/drone-swarm.jpg",
+    image: img("drone-swarm.jpg"),
     bullets: [
       "Designed a custom STM32H742-based flight controller and developed supporting embedded software.",
       "Worked on drone swarm coordination systems for synchronized autonomous operation and collision avoidance.",
@@ -56,7 +58,7 @@ const work = [
     description:
       "Designed and tested active downconverter modules using IQ mixer architecture, limiter/LNA front ends, and custom bias sequencing on Rogers-based RF hardware.",
     result: "~1.67 dB system NF / +33 dBm CW survivability / 40 dB gain",
-    image: "/images/downconverter.jpg",
+    image: img("downconverter.jpg"),
   },
   {
     label: "CONTROL ELECTRONICS",
@@ -64,7 +66,7 @@ const work = [
     description:
       "Developed a consolidated radar support board for transmit / standby control, ADC-based monitoring, and Ethernet communication, replacing multiple boards with a smaller integrated solution.",
     result: "40% size reduction / integrated monitoring and control",
-    image: "/images/amp-interface.jpg",
+    image: img("amp-interface.jpg"),
   },
   {
     label: "RESEARCH SYSTEMS",
@@ -72,7 +74,7 @@ const work = [
     description:
       "Worked on embedded control, communications, and directional RF concepts for autonomous multirotor platforms operating in coordinated swarm configurations.",
     result: "Distributed communications / autonomous coordination / RF experimentation",
-    image: "/images/drone-swarm.jpg",
+    image: img("drone-swarm.jpg"),
   },
   {
     label: "INDEPENDENT PROJECT",
@@ -80,7 +82,7 @@ const work = [
     description:
       "Designed a custom STM32-based flight computer integrating sensor data, telemetry, and control-oriented logic for autonomous rocket guidance concepts.",
     result: "9-DOF sensing / RF telemetry / embedded C firmware",
-    image: "/images/rocket-flight-computer.jpg",
+    image: img("rocket-flight-computer.jpg"),
   },
 ];
 
@@ -247,6 +249,20 @@ function RadarIllustration() {
   );
 }
 
+function runSmokeTests() {
+  console.assert(services.length === 4, "Expected four service cards.");
+  console.assert(experience.length === 2, "Expected two experience entries.");
+  console.assert(work.length === 4, "Expected four selected work entries.");
+  console.assert(capabilities.length >= 8, "Expected at least eight capability bullets.");
+  console.assert(services.every((service) => service.id && service.title && service.text), "Every service needs an id, title, and text.");
+  console.assert(experience.every((item) => item.title && item.organization && item.image && item.bullets.length > 0), "Every experience item needs title, organization, image, and bullets.");
+  console.assert(work.every((item) => item.title && item.description && item.result && item.image), "Every work item needs title, description, result, and image.");
+}
+
+if (typeof window !== "undefined") {
+  runSmokeTests();
+}
+
 export default function App() {
   return (
     <div className="site">
@@ -327,7 +343,7 @@ export default function App() {
         <section className="image-band">
           <div className="container image-band__grid">
             <ImageSlot
-              src="/images/hero-board.jpg"
+              src={img("hero-board.jpg")}
               alt="RF hardware or board photo"
               label="Program imagery / hardware"
             />
