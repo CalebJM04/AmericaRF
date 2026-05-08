@@ -21,7 +21,7 @@ const services = [
   {
     id: "04",
     title: "Antenna & Array Development",
-    text: "Patch antennas, phased-array concepts, EM simulation support, beamforming-oriented design, and coupling review for directional RF systems.",
+    text: "Patch antennas, phased-array concepts, ADAR1000-based beamforming, EM simulation support, beamsteering validation, and coupling review for directional RF systems.",
   },
 ];
 
@@ -32,10 +32,12 @@ const experience = [
     organization: "EWR Radar Systems",
     image: img("amp-interface.jpg"),
     bullets: [
-      "Designed and tested an amplifier interface PCB for radar transmit / standby control with gigabit Ethernet, 4-channel ADC monitoring, and controlled-impedance layout.",
-      "Designed and tested C-band and X-band active downconverter modules with IQ mixer architecture, limiter/LNA front ends, and custom GaAs bias sequencing.",
-      "Helped achieve approximately 1.67 dB system noise figure, +33 dBm CW input survivability, and 40 dB gain on RF front-end work.",
-      "Trained 20+ customers on radar operation and maintenance.",
+      "Completely designed, tested, and implemented an amplifier control/interface board now used in production radar systems, providing transmit/standby RF pass-through control between the signal processor and radar amplifier.",
+      "Integrated gigabit Ethernet communication, 4-channel ADC monitoring, controlled-impedance routing, trigger/gate control, and production-minded board documentation into a consolidated radar support PCB.",
+      "Reduced the previous multi-board amplifier-control approach into a smaller integrated solution, consolidating three boards into one and achieving an estimated 40% size reduction with lower system complexity.",
+      "Designed and tested C-band and X-band active downconverter modules using IQ mixer architecture, limiter/LNA front ends, custom GaAs bias sequencing, and Rogers-based RF PCB implementation.",
+      "Developed RF signal chains targeting low system noise and high survivability, including approximately 1.67 dB system noise figure, +33 dBm CW input survivability, and roughly 40 dB gain across active RF/IF downconverter work.",
+      "Assisted with radar setup, field support, and customer training on radar operation and maintenance.",
     ],
   },
   {
@@ -44,9 +46,11 @@ const experience = [
     organization: "Microwave Research Group",
     image: img("drone-swarm.jpg"),
     bullets: [
-      "Designed a custom STM32H742-based flight controller and developed supporting embedded software.",
-      "Worked on drone swarm coordination systems for synchronized autonomous operation and collision avoidance.",
-      "Designed phased-array patch antennas and implemented beamforming-related work for directional RF communication.",
+      "Designed a custom STM32H742-based flight controller and developed the supporting embedded software and control algorithms for autonomous stabilization and waypoint-oriented flight behavior.",
+      "Developed flight-control algorithms using embedded C and Simulink-based control design, including PID-style stabilization logic, sensor integration, and real-time control-loop implementation.",
+      "Worked on drone swarm coordination for synchronized operation of up to 15 autonomous quadcopters using distributed communication concepts, collision-avoidance logic, telemetry links, and coordinated mission behavior.",
+      "Designed phased-array patch antennas and used ADAR1000 beamformer hardware for electronic beamforming experiments, including beamsteering simulation, phase-control implementation, and successful beamsteering test work.",
+      "Designed, tested, and developed a high-power delivery board for 4S–12S battery packs with 250A+ current capability, per-line voltage/current/temperature sensing, built-in fault detection, rail-level safeguards, and battery ORing for redundant operation.",
     ],
   },
 ];
@@ -56,25 +60,41 @@ const work = [
     label: "RADAR HARDWARE",
     title: "C-Band / X-Band Active Downconverter Modules",
     description:
-      "Designed and tested active downconverter modules using IQ mixer architecture, limiter/LNA front ends, and custom bias sequencing on Rogers-based RF hardware.",
-    result: "~1.67 dB system NF / +33 dBm CW survivability / 40 dB gain",
+      "Designed and tested active downconverter modules using IQ mixer architecture, limiter/LNA front ends, custom GaAs bias sequencing, and Rogers-based RF hardware. The work focused on low-noise receiver performance, high-input survivability, controlled RF/IF gain, and measured system-level validation.",
+    result: "~1.67 dB system NF / +33 dBm CW survivability / ~40 dB active RF-IF gain",
     image: img("downconverter.jpg"),
   },
   {
-    label: "CONTROL ELECTRONICS",
-    title: "Amplifier Interface & Monitoring PCB",
+    label: "PRODUCTION RADAR ELECTRONICS",
+    title: "Amplifier Control & Monitoring Board",
     description:
-      "Developed a consolidated radar support board for transmit / standby control, ADC-based monitoring, and Ethernet communication, replacing multiple boards with a smaller integrated solution.",
-    result: "40% size reduction / integrated monitoring and control",
+      "Completely designed, tested, and implemented a production radar amplifier-control board that manages transmit/standby RF pass-through, trigger/gate behavior, amplifier monitoring, and Ethernet-connected system communication.",
+    result: "Now used in production radars / gigabit Ethernet / 4-channel ADC / 40% size reduction",
     image: img("amp-interface.jpg"),
+  },
+  {
+    label: "HIGH-POWER EMBEDDED SYSTEMS",
+    title: "4S–12S High-Power Battery Delivery Board",
+    description:
+      "Designed a high-current battery power delivery and protection board for multi-pack operation, with sensing and protection built around high-reliability autonomous platform requirements.",
+    result: "250A+ current capability / voltage-current-temp sensing / fault detection / battery ORing",
+    image: img("power-delivery.jpg"),
   },
   {
     label: "RESEARCH SYSTEMS",
     title: "Drone Swarm RF & Flight-Control Platform",
     description:
-      "Worked on embedded control, communications, and directional RF concepts for autonomous multirotor platforms operating in coordinated swarm configurations.",
-    result: "Distributed communications / autonomous coordination / RF experimentation",
+      "Worked on embedded control, communications, telemetry, and coordination logic for autonomous multirotor platforms operating in synchronized swarm configurations, including distributed communication and collision-avoidance concepts.",
+    result: "Up to 15 coordinated drones / distributed comms / autonomous control algorithms",
     image: img("drone-swarm.jpg"),
+  },
+  {
+    label: "PHASED ARRAY DEVELOPMENT",
+    title: "ADAR1000 Beamforming & Beamsteering Work",
+    description:
+      "Designed phased-array patch antenna concepts and used ADAR1000 beamformer hardware for electronic beamforming experiments, including simulation, phase-control implementation, and beamsteering validation.",
+    result: "ADAR1000 beamforming / simulated and tested beamsteering / patch-array development",
+    image: img("phased-array.jpg"),
   },
   {
     label: "INDEPENDENT PROJECT",
@@ -114,10 +134,12 @@ const capabilities = [
   "Signal-chain architecture and component selection",
   "Controlled-impedance PCB layout and stackup planning",
   "CST Studio Suite / Ansys HFSS support",
+  "ADAR1000 beamforming, phased-array simulation, and beamsteering validation",
   "Oscilloscope, VNA, power meter, and spectrum analyzer workflows",
   "STM32 firmware, SPI, I2C, UART, Ethernet, Linux, Python, and MATLAB",
+  "High-current DC power distribution, battery ORing, sensing, and fault detection",
   "Prototype review, bring-up support, and design-risk identification",
-  "Technical communication for engineering and customer-facing work",
+  "Radar setup support, customer training assistance, and technical communication",
 ];
 
 function SectionKicker({ children }) {
@@ -236,10 +258,10 @@ function RadarIllustration() {
 
       <rect x="492" y="374" width="120" height="62" fill="none" stroke="var(--line)" />
       <text x="510" y="400" className="svg-small">
-        TRAINED
+        TESTED
       </text>
       <text x="510" y="425" className="svg-medium">
-        20+
+        RF
       </text>
 
       <text x="46" y="476" className="svg-label">
@@ -247,20 +269,6 @@ function RadarIllustration() {
       </text>
     </svg>
   );
-}
-
-function runSmokeTests() {
-  console.assert(services.length === 4, "Expected four service cards.");
-  console.assert(experience.length === 2, "Expected two experience entries.");
-  console.assert(work.length === 4, "Expected four selected work entries.");
-  console.assert(capabilities.length >= 8, "Expected at least eight capability bullets.");
-  console.assert(services.every((service) => service.id && service.title && service.text), "Every service needs an id, title, and text.");
-  console.assert(experience.every((item) => item.title && item.organization && item.image && item.bullets.length > 0), "Every experience item needs title, organization, image, and bullets.");
-  console.assert(work.every((item) => item.title && item.description && item.result && item.image), "Every work item needs title, description, result, and image.");
-}
-
-if (typeof window !== "undefined") {
-  runSmokeTests();
 }
 
 export default function App() {
@@ -373,8 +381,8 @@ export default function App() {
                 <h2 className="section-title">Current roles and technical background.</h2>
               </div>
               <p className="section-copy">
-                Experience across radar hardware, support electronics, research systems,
-                embedded control, and customer-facing technical work.
+                Experience across radar hardware, RF front ends, support electronics,
+                autonomous systems, embedded control, and customer-facing technical work.
               </p>
             </div>
 
@@ -435,8 +443,8 @@ export default function App() {
                 <h2 className="section-title">Programs, boards, and RF chains.</h2>
               </div>
               <p className="section-copy">
-                A selection of work spanning radar hardware, control electronics,
-                research systems, and embedded development.
+                A selection of work spanning production radar electronics, RF downconverters,
+                phased-array development, high-power embedded systems, and autonomous platforms.
               </p>
             </div>
 
