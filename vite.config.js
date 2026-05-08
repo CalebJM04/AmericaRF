@@ -5,5 +5,5 @@ import react from "@vitejs/plugin-react";
 // without needing to hard-code your repository name.
 export default defineConfig({
   plugins: [react()],
-  base: "./AmericaRF/",
+  base: "/AmericaRF/",
 });
