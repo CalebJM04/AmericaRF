@@ -669,3 +669,33 @@ a {
     padding: 3rem 0;
   }
 }
+
+.contact-details {
+  margin-top: 1.5rem;
+  padding-top: 1.3rem;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 0.85rem;
+}
+
+.contact-details div {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.contact-details span {
+  color: var(--ink-soft);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.contact-details a {
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.contact-details a:hover {
+  color: var(--accent-red);
+}

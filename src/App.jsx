@@ -532,11 +532,25 @@ export default function App() {
               <div className="contact-panel__label">Inquiry</div>
               <div className="contact-panel__actions">
                 <ArrowButton href="mailto:flvol04@gmail.com" primary>
-                  Email
+                  Email Caleb
+                </ArrowButton>
+                <ArrowButton href="tel:+18656221963">
+                  Call / Text
                 </ArrowButton>
                 <ArrowButton href="https://github.com/CalebJM04">
                   GitHub
                 </ArrowButton>
+              </div>
+
+              <div className="contact-details" aria-label="Contact details">
+                <div>
+                  <span>Email</span>
+                  <a href="mailto:flvol04@gmail.com">flvol04@gmail.com</a>
+                </div>
+                <div>
+                  <span>Phone</span>
+                  <a href="tel:+18656221963">(865) 622-1963</a>
+                </div>
               </div>
 
               <div className="contact-panel__note">
