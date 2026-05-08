@@ -316,7 +316,7 @@ export default function App() {
               </p>
 
               <div className="hero__actions">
-                <ArrowButton href="mailto:flvol04@gmail.com" primary>
+                <ArrowButton href="#contact" primary>
                   Contact Caleb
                 </ArrowButton>
                 <ArrowButton href="https://github.com/CalebJM04">
