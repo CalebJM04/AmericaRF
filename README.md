@@ -40,6 +40,16 @@ Replace those starter images with your own. Keep the same filenames and paths.
 
 Do not upload employer-owned, proprietary, export-controlled, ITAR-controlled, classified, customer-identifying, or restricted imagery.
 
+## Add your resume
+
+Put your resume PDF at:
+
+```text
+public/resume.pdf
+```
+
+The Contact inquiry box links to that file as `View Resume`. If you prefer a Google Docs version, replace `resumeHref` near the top of `src/App.jsx` with the public sharing URL.
+
 ## Deploy option 1: GitHub Actions
 
 This repo includes a GitHub Pages workflow at:

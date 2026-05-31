@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 const img = (filename) => `${import.meta.env.BASE_URL}images/${filename}`;
+const resumeHref = `${import.meta.env.BASE_URL}resume.pdf`;
 const blogModules = import.meta.glob("./blog/*.md", { query: "?raw", import: "default", eager: true });
 
 function parseFrontmatter(markdown) {
@@ -741,6 +742,9 @@ export default function App() {
                 </ArrowButton>
                 <ArrowButton href="tel:+18656221963">
                   Call / Text
+                </ArrowButton>
+                <ArrowButton href={resumeHref}>
+                  View Resume
                 </ArrowButton>
                 <ArrowButton href="https://github.com/CalebJM04">
                   GitHub
