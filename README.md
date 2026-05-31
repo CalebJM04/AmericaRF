@@ -85,6 +85,30 @@ Most visual styling lives in:
 src/styles.css
 ```
 
+## Adding blog posts
+
+Add markdown files to:
+
+```text
+src/blog
+```
+
+Each file can start with frontmatter:
+
+```md
+---
+title: "Post Title"
+date: "2026-05-31"
+summary: "Short description shown above the post."
+---
+
+## Heading
+
+Write the post body in markdown.
+```
+
+The site automatically imports every `.md` file in `src/blog` and sorts posts by date, newest first. The built-in renderer supports headings, paragraphs, links, bold, italic, inline code, bulleted lists, blockquotes, and fenced code blocks.
+
 ## Notes
 
 The Vite config uses:

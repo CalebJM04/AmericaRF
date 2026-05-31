@@ -1,6 +1,42 @@
 import React, { useState } from "react";
 
 const img = (filename) => `${import.meta.env.BASE_URL}images/${filename}`;
+const blogModules = import.meta.glob("./blog/*.md", { query: "?raw", import: "default", eager: true });
+
+function parseFrontmatter(markdown) {
+  const match = markdown.match(/^---\n([\s\S]*?)\n---\n?/);
+  const meta = {};
+
+  if (!match) {
+    return { meta, content: markdown.trim() };
+  }
+
+  match[1].split("\n").forEach((line) => {
+    const separatorIndex = line.indexOf(":");
+    if (separatorIndex === -1) return;
+
+    const key = line.slice(0, separatorIndex).trim();
+    const value = line.slice(separatorIndex + 1).trim().replace(/^["']|["']$/g, "");
+    meta[key] = value;
+  });
+
+  return { meta, content: markdown.slice(match[0].length).trim() };
+}
+
+const blogPosts = Object.entries(blogModules)
+  .map(([path, markdown]) => {
+    const { meta, content } = parseFrontmatter(markdown);
+    const slug = path.split("/").pop().replace(/\.md$/, "");
+
+    return {
+      slug,
+      title: meta.title || slug.replace(/-/g, " "),
+      date: meta.date || "",
+      summary: meta.summary || "",
+      content,
+    };
+  })
+  .sort((a, b) => b.date.localeCompare(a.date));
 
 const services = [
   {
@@ -141,6 +177,174 @@ const capabilities = [
   "Prototype review, bring-up support, and design-risk identification",
   "Radar setup support, customer training assistance, and technical communication",
 ];
+
+function getInlineParts(text) {
+  const parts = [];
+  const pattern = /(`[^`]+`|\*\*[^*]+\*\*|\*[^*]+\*|\[[^\]]+\]\([^)]+\))/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = pattern.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+
+    const token = match[0];
+
+    if (token.startsWith("`")) {
+      parts.push(<code key={parts.length}>{token.slice(1, -1)}</code>);
+    } else if (token.startsWith("**")) {
+      parts.push(<strong key={parts.length}>{token.slice(2, -2)}</strong>);
+    } else if (token.startsWith("*")) {
+      parts.push(<em key={parts.length}>{token.slice(1, -1)}</em>);
+    } else {
+      const linkMatch = token.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+      const href = linkMatch?.[2] || "#";
+      const external = href.startsWith("http");
+      parts.push(
+        <a key={parts.length} href={href} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined}>
+          {linkMatch?.[1] || href}
+        </a>
+      );
+    }
+
+    lastIndex = pattern.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return parts;
+}
+
+function MarkdownContent({ content }) {
+  const lines = content.split("\n");
+  const blocks = [];
+  let paragraph = [];
+  let list = [];
+  let quote = [];
+  let code = [];
+  let inCode = false;
+
+  const flushParagraph = () => {
+    if (!paragraph.length) return;
+    blocks.push({ type: "paragraph", text: paragraph.join(" ") });
+    paragraph = [];
+  };
+
+  const flushList = () => {
+    if (!list.length) return;
+    blocks.push({ type: "list", items: list });
+    list = [];
+  };
+
+  const flushQuote = () => {
+    if (!quote.length) return;
+    blocks.push({ type: "quote", text: quote.join(" ") });
+    quote = [];
+  };
+
+  lines.forEach((line) => {
+    if (line.trim().startsWith("```")) {
+      if (inCode) {
+        blocks.push({ type: "code", text: code.join("\n") });
+        code = [];
+        inCode = false;
+      } else {
+        flushParagraph();
+        flushList();
+        flushQuote();
+        inCode = true;
+      }
+      return;
+    }
+
+    if (inCode) {
+      code.push(line);
+      return;
+    }
+
+    if (!line.trim()) {
+      flushParagraph();
+      flushList();
+      flushQuote();
+      return;
+    }
+
+    const heading = line.match(/^(#{2,4})\s+(.+)$/);
+    if (heading) {
+      flushParagraph();
+      flushList();
+      flushQuote();
+      blocks.push({ type: "heading", level: heading[1].length, text: heading[2] });
+      return;
+    }
+
+    const listItem = line.match(/^[-*]\s+(.+)$/);
+    if (listItem) {
+      flushParagraph();
+      flushQuote();
+      list.push(listItem[1]);
+      return;
+    }
+
+    const quoteLine = line.match(/^>\s?(.+)$/);
+    if (quoteLine) {
+      flushParagraph();
+      flushList();
+      quote.push(quoteLine[1]);
+      return;
+    }
+
+    flushList();
+    flushQuote();
+    paragraph.push(line.trim());
+  });
+
+  flushParagraph();
+  flushList();
+  flushQuote();
+
+  if (code.length) {
+    blocks.push({ type: "code", text: code.join("\n") });
+  }
+
+  return (
+    <div className="markdown-content">
+      {blocks.map((block, index) => {
+        if (block.type === "heading") {
+          const HeadingTag = `h${block.level}`;
+          return <HeadingTag key={index}>{getInlineParts(block.text)}</HeadingTag>;
+        }
+
+        if (block.type === "list") {
+          return (
+            <ul key={index}>
+              {block.items.map((item) => (
+                <li key={item}>{getInlineParts(item)}</li>
+              ))}
+            </ul>
+          );
+        }
+
+        if (block.type === "quote") {
+          return <blockquote key={index}>{getInlineParts(block.text)}</blockquote>;
+        }
+
+        if (block.type === "code") {
+          return (
+            <pre key={index}>
+              <code>{block.text}</code>
+            </pre>
+          );
+        }
+
+        return <p key={index}>{getInlineParts(block.text)}</p>;
+      })}
+    </div>
+  );
+}
 
 function SectionKicker({ children }) {
   return (
@@ -292,6 +496,7 @@ export default function App() {
             <a href="#work">Work</a>
             <a href="#process">Process</a>
             <a href="#capabilities">Capabilities</a>
+            <a href="#blog">Blog</a>
             <a href="#contact">Contact</a>
           </nav>
         </div>
@@ -508,6 +713,40 @@ export default function App() {
                   <span className="capability-dot" aria-hidden="true" />
                   <span>{item}</span>
                 </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="blog" className="section section--tint">
+          <div className="container">
+            <div className="section-head">
+              <div>
+                <SectionKicker>Blog</SectionKicker>
+                <h2 className="section-title">Technical notes and project writing.</h2>
+              </div>
+              <p className="section-copy">
+                Markdown-based posts for RF design notes, measurement writeups,
+                engineering process thoughts, and project updates suitable for public release.
+              </p>
+            </div>
+
+            <div className="blog-list">
+              {blogPosts.map((post) => (
+                <article className="blog-card" id={`blog-${post.slug}`} key={post.slug}>
+                  <header className="blog-card__header">
+                    <div>
+                      {post.date ? <time className="blog-card__date" dateTime={post.date}>{post.date}</time> : null}
+                      <h3>{post.title}</h3>
+                      {post.summary ? <p>{post.summary}</p> : null}
+                    </div>
+                    <a className="blog-card__anchor" href={`#blog-${post.slug}`}>
+                      Permalink
+                    </a>
+                  </header>
+
+                  <MarkdownContent content={post.content} />
+                </article>
               ))}
             </div>
           </div>

@@ -552,6 +552,153 @@ a {
   flex-shrink: 0;
 }
 
+.blog-list {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.blog-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.blog-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.blog-card__date,
+.blog-card__anchor {
+  color: var(--accent-red);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.blog-card__anchor {
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+.blog-card__anchor:hover {
+  color: var(--accent-red);
+}
+
+.blog-card h3 {
+  margin: 0.75rem 0 0;
+  color: var(--navy);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.blog-card__header p {
+  max-width: 44rem;
+  margin: 0.85rem 0 0;
+  color: #4a4a4a;
+  line-height: 1.85;
+}
+
+.markdown-content {
+  max-width: 56rem;
+  padding: 1.5rem;
+  color: #4a4a4a;
+  line-height: 1.85;
+}
+
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4 {
+  margin: 2rem 0 0.75rem;
+  color: var(--navy);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.markdown-content h2:first-child,
+.markdown-content h3:first-child,
+.markdown-content h4:first-child {
+  margin-top: 0;
+}
+
+.markdown-content h2 {
+  font-size: 1.6rem;
+}
+
+.markdown-content h3 {
+  font-size: 1.3rem;
+}
+
+.markdown-content h4 {
+  font-size: 1.05rem;
+}
+
+.markdown-content p,
+.markdown-content ul,
+.markdown-content blockquote,
+.markdown-content pre {
+  margin: 1rem 0 0;
+}
+
+.markdown-content ul {
+  padding-left: 1.15rem;
+}
+
+.markdown-content li + li {
+  margin-top: 0.45rem;
+}
+
+.markdown-content a {
+  color: var(--navy);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+.markdown-content a:hover {
+  color: var(--accent-red);
+}
+
+.markdown-content code {
+  background: var(--surface-2);
+  color: var(--navy);
+  border: 1px solid var(--line);
+  padding: 0.1rem 0.28rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.88em;
+}
+
+.markdown-content pre {
+  overflow-x: auto;
+  background: #20252a;
+  color: var(--surface);
+  padding: 1rem;
+  border: 1px solid var(--line);
+}
+
+.markdown-content pre code {
+  display: block;
+  background: transparent;
+  color: inherit;
+  border: 0;
+  padding: 0;
+}
+
+.markdown-content blockquote {
+  border-left: 3px solid var(--accent-red);
+  padding: 0.15rem 0 0.15rem 1rem;
+  color: var(--ink-soft);
+}
+
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 330px;
@@ -655,6 +802,10 @@ a {
 
   .site-nav a {
     font-size: 0.68rem;
+  }
+
+  .blog-card__header {
+    flex-direction: column;
   }
 
   .button {
