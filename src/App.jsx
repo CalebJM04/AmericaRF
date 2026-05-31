@@ -496,8 +496,8 @@ export default function App() {
             <a href="#work">Work</a>
             <a href="#process">Process</a>
             <a href="#capabilities">Capabilities</a>
-            <a href="#blog">Blog</a>
             <a href="#contact">Contact</a>
+            <a href="#blog">Blog</a>
           </nav>
         </div>
       </header>
@@ -718,40 +718,6 @@ export default function App() {
           </div>
         </section>
 
-        <section id="blog" className="section section--tint">
-          <div className="container">
-            <div className="section-head">
-              <div>
-                <SectionKicker>Blog</SectionKicker>
-                <h2 className="section-title">Technical notes and project writing.</h2>
-              </div>
-              <p className="section-copy">
-                Markdown-based posts for RF design notes, measurement writeups,
-                engineering process thoughts, and project updates suitable for public release.
-              </p>
-            </div>
-
-            <div className="blog-list">
-              {blogPosts.map((post) => (
-                <article className="blog-card" id={`blog-${post.slug}`} key={post.slug}>
-                  <header className="blog-card__header">
-                    <div>
-                      {post.date ? <time className="blog-card__date" dateTime={post.date}>{post.date}</time> : null}
-                      <h3>{post.title}</h3>
-                      {post.summary ? <p>{post.summary}</p> : null}
-                    </div>
-                    <a className="blog-card__anchor" href={`#blog-${post.slug}`}>
-                      Permalink
-                    </a>
-                  </header>
-
-                  <MarkdownContent content={post.content} />
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
         <section id="contact" className="section section--contact">
           <div className="container contact-grid">
             <div>
@@ -798,6 +764,40 @@ export default function App() {
                 Available for technical discussions and selected project-based support.
               </div>
             </aside>
+          </div>
+        </section>
+
+        <section id="blog" className="section section--tint">
+          <div className="container">
+            <div className="section-head">
+              <div>
+                <SectionKicker>Blog</SectionKicker>
+                <h2 className="section-title">Technical notes and project writing.</h2>
+              </div>
+              <p className="section-copy">
+                Markdown-based posts for RF design notes, measurement writeups,
+                engineering process thoughts, and project updates suitable for public release.
+              </p>
+            </div>
+
+            <div className="blog-list">
+              {blogPosts.map((post) => (
+                <article className="blog-card" id={`blog-${post.slug}`} key={post.slug}>
+                  <header className="blog-card__header">
+                    <div>
+                      {post.date ? <time className="blog-card__date" dateTime={post.date}>{post.date}</time> : null}
+                      <h3>{post.title}</h3>
+                      {post.summary ? <p>{post.summary}</p> : null}
+                    </div>
+                    <a className="blog-card__anchor" href={`#blog-${post.slug}`}>
+                      Permalink
+                    </a>
+                  </header>
+
+                  <MarkdownContent content={post.content} />
+                </article>
+              ))}
+            </div>
           </div>
         </section>
       </main>
